@@ -1,0 +1,54 @@
+1) remove extra features - ['id'] ✅
+2) encode string values ✅
+3) scale data ✅
+4) view features correlation ✅
+4) view features distribution (pairplot) ✅
+	non-linear classes
+4) check outliers ✅
+	no outliers
+5) try PCA ✅
+	doesn't have sense here -> 30 features, not so big number + only 25 features give us 95% of variance (checked with IncrementalPCA/KernelPCA)
+6) try to undersample data [-]
+	in process...
+7) try different models (with/without resample data) [-]
+	- LogisticRegression -> low metrics results (expected for non-linear distribution)
+	- SVC
+	- KNN (seems to be good after CNN)
+	- DecisionTree
+	- Bagging(DecisionTree)
+	- Bagging(KNN)
+	- RandomForestClassifier
+	- Voter for models with appropriate quality
+
+	- boosting?
+
+seems that recall_score is important to detect mutation not to fail detecting it when it has place to be
+
+i think bagging should increase metrics in this case
+and maybe trees will give best results. So bagging on trees
+
+also interested in KNN results
+
+->
+best for now
+
+label encoded strings
+radom resample
+bootstrap false
+
+basic_model_test(VotingClassifier(
+    estimators=[('svc', BaggingClassifier(estimator=SVC(max_iter=1000000, random_state= random_state, probability=True), n_estimators=5, max_samples=40000, bootstrap=False, n_jobs=-1, random_state=random_state)),
+                ('bag', BaggingClassifier(estimator=DecisionTreeClassifier(random_state=random_state), n_estimators=1000, max_samples=40000, bootstrap=False, n_jobs=-1, random_state=random_state)),
+                ],
+    voting='soft',
+    weights=[0.3, 0.7]), 
+    X_train_resampled_random, 
+    X_test, 
+    y_train_resampled_random, 
+    y_test)
+
+ROC AUC:   0.882
+Accuracy:  0.804
+Precision: 0.596
+Recall:    0.798
+F1-score:  0.683
