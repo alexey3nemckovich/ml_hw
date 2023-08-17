@@ -1,0 +1,7 @@
+cosmonaut_gagarin.jpg	a photo of a first cosmonaut man
+cosmonaut_woman.jpg	a photo of cosmonaut woman
+cr7.jpg	a photo of the most famous portugal football player
+golden_retriever_dog.jpg	а golder retriever dog
+husky_dog.jpg	а husky dog
+messi.jpg	a photo of one of the most famous argentina football players
+pele.jpg	a photo of legendary brazilian football player
