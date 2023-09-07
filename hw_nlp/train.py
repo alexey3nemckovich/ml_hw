@@ -16,8 +16,9 @@ if __name__ == '__main__':
     import argparse
     from gensim.models.doc2vec import *
     from file_utils import read_csv, file_exists
-    from constants import *
+    from progress_callback import ProgressCallback
     from logger import logger
+    from constants import *
     import sys
 
     parser = argparse.ArgumentParser(
@@ -123,7 +124,7 @@ if __name__ == '__main__':
                     dm=0)
 
     model.build_vocab(docs)
-    model.train(docs, total_examples=len(docs), epochs=NUM_EPOCHS)
+    model.train(docs, total_examples=len(docs), epochs=NUM_EPOCHS, callbacks=[ProgressCallback(logger)])
 
     reviews[VECTOR_COLUMN] = reviews.index.to_series().apply(lambda doc_id: model.dv[doc_id])
 
