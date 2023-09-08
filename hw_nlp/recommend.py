@@ -1,15 +1,55 @@
-import gensim.models.doc2vec
-import pandas as pd
 from typing import List
 
-
-def read_data(filepath: str):
-    reviews = read_csv(filepath)
-    reviews[VECTOR_COLUMN] = reviews[VECTOR_COLUMN].apply(str_to_ndarray)
-    return reviews
+import gensim.models.doc2vec
+import pandas as pd
 
 
-def get_n_similar_wines(wine_summary: str, data: pd.DataFrame, doc2vec_model: gensim.models.doc2vec.Doc2Vec, learning_rate: float, vec_column: str, columns: List[str], n: int):
+def read_vectorized_data(filepath: str) -> pd.DataFrame:
+    """
+    read_data reads and returns Pandas DataFrame object from file with vectorized summaries.
+
+    :param filepath: A path to a file with data.
+    :returns: A Pandas DataFrame object.
+
+    Example usage:
+        read_vectorized_data(filepath='./data')
+    """
+    reviews_data = read_csv(filepath)
+    reviews_data[VECTOR_COLUMN] = reviews_data[VECTOR_COLUMN].apply(str_to_ndarray)
+    return reviews_data
+
+
+def get_n_similar_wines(
+        wine_summary: str,
+        data: pd.DataFrame,
+        doc2vec_model: gensim.models.doc2vec.Doc2Vec,
+        learning_rate: float,
+        vec_column: str,
+        columns: List[str],
+        n: int) -> pd.DataFrame:
+    """
+    get_n_similar_wines returns Pandas DataFrame object with information about 'n' most similar
+    wines according to their vectorized summary representation.
+
+    :param wine_summary: Wine summary.
+    :param data: A Pandas DataFrame object with vectorized wines summaries representations.
+    :param doc2vec_model: Trained Gensim Doc2Vec model object instance.
+    :param learning_rate: Learning rate used to get wine summary vectorized representation.
+    :param vec_column: Name of vectorized wines summaries representations in Pandas DataFrame object.
+    :param columns: Columns with info to get for most similar wines.
+    :param n: Count of similar wines to return
+    :returns: Pandas DataFrame object.
+
+    Example usage:
+    get_n_similar_wines(
+        wine_summary=summary,
+        data=reviews,
+        doc2vec_model=loaded_model,
+        learning_rate=LEARNING_RATE,
+        vec_column=VECTOR_COLUMN,
+        columns=[TITLE_COLUMN, VARIETY_COLUMN, POINTS_COLUMN, PRICE_COLUMN, SIMILARITY_COLUMN],
+        n=N_RECOMMENDS)
+    """
     data_copy = data.copy(deep=True)
 
     vec = doc2vec_model.infer_vector(wine_summary.split(), alpha=learning_rate)
@@ -88,7 +128,7 @@ if __name__ == '__main__':
                      "and 'train.py' before using 'recommend.py' script.")
         sys.exit(1)
 
-    reviews = read_data(VECTORIZED_DATA_FILE_PATH)
+    reviews = read_vectorized_data(VECTORIZED_DATA_FILE_PATH)
     summary_max_length = read_int_from_file(SUMMARY_CONFIG_FILE_PATH)
 
     logger.info(

@@ -2,6 +2,18 @@ import pandas as pd
 
 
 def build_tagged_documents(data: pd.DataFrame, text_column: str):
+    """
+    summarize_texts returns list of tagged documents from dataframe text column values.
+
+    :param data: Pandas DataFrame object with data to process.
+    :param text_column: Name of column with text values.
+    :returns: List of TaggedDocument objects from dataframe text column values.
+
+    Example usage:
+    build_tagged_documents(
+        data=reviews,
+        text_column=SUMMARY_COLUMN)
+    """
     splitted_texts = [text.split() for text in data[text_column]]
     idx = [i for i in range(len(data))]
 
