@@ -56,7 +56,23 @@ def get_n_similar_wines(
 
     data_copy[SIMILARITY_COLUMN] = data_copy[vec_column].apply(lambda x: cosine_similarity([vec], [x.tolist()])[0][0])
 
-    return data_copy.sort_values(by=SIMILARITY_COLUMN, ascending=False)[columns][:n]
+    columns_to_get = list(columns)
+    columns_to_get.append(PRICE_COLUMN)
+
+    # top 'n' similar wines info
+    similar_wines_info = data_copy.sort_values(by=SIMILARITY_COLUMN, ascending=False)[columns_to_get][:n]
+
+    # average prices for top 'n' wines
+    average_prices = similar_wines_info[similar_wines_info[TITLE_COLUMN].isin(similar_wines_info[TITLE_COLUMN])].groupby(TITLE_COLUMN)[PRICE_COLUMN].mean().reset_index()
+    avg_prices_dict = dict(zip(average_prices[TITLE_COLUMN], average_prices[PRICE_COLUMN]))
+
+    # saving avg price column and moving similarity column to the right
+    similar_wines_info[PRICE_AVG_COLUMN] = similar_wines_info[TITLE_COLUMN].apply(lambda x: avg_prices_dict[x])
+    similar_wines_info.pop(PRICE_COLUMN)
+    sim_column = similar_wines_info.pop(SIMILARITY_COLUMN)
+    similar_wines_info[SIMILARITY_COLUMN] = sim_column
+
+    return similar_wines_info
 
 
 if __name__ == '__main__':
@@ -155,7 +171,7 @@ if __name__ == '__main__':
         doc2vec_model=loaded_model,
         learning_rate=LEARNING_RATE,
         vec_column=VECTOR_COLUMN,
-        columns=[TITLE_COLUMN, VARIETY_COLUMN, POINTS_COLUMN, PRICE_COLUMN, SIMILARITY_COLUMN],
+        columns=[TITLE_COLUMN, VARIETY_COLUMN, POINTS_COLUMN, SIMILARITY_COLUMN],
         n=N_RECOMMENDS)
 
     logger.info(f"Similar wines based on description provided: \n"

@@ -17,6 +17,7 @@ TITLE_COLUMN = 'title'
 VARIETY_COLUMN = 'variety'
 POINTS_COLUMN = 'points'
 PRICE_COLUMN = 'price'
+PRICE_AVG_COLUMN = 'price_avg'
 
 # summarizing params
 DEFAULT_SUMMARY_MAX_LENGTH = 50

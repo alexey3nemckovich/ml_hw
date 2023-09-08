@@ -42,24 +42,24 @@ options:
 ````
   (venv) alex@alex-pc:~/projects/ml/ml_hw/hw_nlp$ python ./recommend.py
 ````
-[2023-09-08 14:06:12][INFO] Recommending similar wines with parameters:
+[2023-09-08 15:04:52][INFO] Recommending similar wines with parameters:
   description: 'Much like the regular bottling from 2012, this comes across as rather rough and tannic, with rustic, earthy, herbal characteristics. Nonetheless, if you think of it as a pleasantly unfussy country wine, it's a good companion to a hearty winter stew.'
   learning_rate: 0.025
   vectorized_data_file_path: './wine_reviews_vectorized.csv'
   doc2vec_model_file_path: './doc2vec_model.pkl'
   n_recommends: 5
-[2023-09-08 14:06:12][INFO] Summarizing wine description...
-[2023-09-08 14:06:14][INFO] Wine description summary:
+[2023-09-08 15:04:52][INFO] Summarizing wine description...
+[2023-09-08 15:04:54][INFO] Wine description summary:
   much like regular bottling 2012 come across rather rough tannic rustic earthy herbal characteristic. nevertheless think pleasantly unfussy country wine good companion hearty winter stew.
-[2023-09-08 14:06:14][INFO] Loading Doc2Vec model from file...
-[2023-09-08 14:06:14][INFO] Searching for similar wines...
-[2023-09-08 14:06:18][INFO] Similar wines based on description provided: 
-                                                   title     variety  points  price  similarity
-0      Sweet Cheeks 2012 Vintner's Reserve Wild Child...  Pinot Noir      87   65.0    0.994935
-3184   Block Nine 2014 Caiden's Vineyards Pinot Noir ...  Pinot Noir      82   14.0    0.526934
-16191  Kokomo 2013 Pauline's Vineyard Merlot (Dry Cre...      Merlot      89   34.0    0.521914
-7326            Hyatt 2000 Reserve Syrah (Yakima Valley)       Syrah      83   18.0    0.517517
-13894  Amici 2012 Charles Heintz Vineyard Chardonnay ...  Chardonnay      84   65.0    0.506243
+[2023-09-08 15:04:54][INFO] Loading Doc2Vec model from file...
+[2023-09-08 15:04:54][INFO] Searching for similar wines...
+[2023-09-08 15:04:58][INFO] Similar wines based on description provided: 
+                                                   title     variety  points  price_avg  similarity
+0      Sweet Cheeks 2012 Vintner's Reserve Wild Child...  Pinot Noir      87       65.0    0.994930
+3184   Block Nine 2014 Caiden's Vineyards Pinot Noir ...  Pinot Noir      82       14.0    0.526929
+16191  Kokomo 2013 Pauline's Vineyard Merlot (Dry Cre...      Merlot      89       34.0    0.521924
+7326            Hyatt 2000 Reserve Syrah (Yakima Valley)       Syrah      83       18.0    0.517578
+13894  Amici 2012 Charles Heintz Vineyard Chardonnay ...  Chardonnay      84       65.0    0.506240
 
 ### Scripts usage information:
 #### preprocess_text.py
